@@ -20,12 +20,12 @@ namespace BLL
         {
             try
             {
-                if ((pacienteRepository.Buscar(paciente.Identificacion)) == null)
+                if ((pacienteRepository.Buscar(paciente.NumLiquidacion)) == null)
                 {
-                   pacienteRepository.Guardar(paciente);
+                    pacienteRepository.Guardar(paciente);
                     return $"se guardaron los datos sactifactoriamente ";
                 }
-                return $"No es posible registrar al paciente con Identificacion {paciente.Identificacion} ya se encuentra registrada ";
+                return $"No es posible registrar al paciente con numero de liquidacion {paciente.NumLiquidacion} ya se encuentra registrado";
 
             }
             catch (Exception ex)
@@ -36,16 +36,16 @@ namespace BLL
 
         }
 
-        public string Eliminar(string identificacion)
+        public string Eliminar(string numLiquidacion)
         {
             try
             {
-                if (pacienteRepository.Buscar(identificacion) != null)
+                if (pacienteRepository.Buscar(numLiquidacion) != null)
                 {
-                    pacienteRepository.Eliminar(identificacion);
-                    return $"se elimino la identificacion numero: {identificacion} correctamente";
+                    pacienteRepository.Eliminar(numLiquidacion);
+                    return $"se elimino la liquidacion numero: {numLiquidacion} correctamente";
                 }
-                return $"El numero de identificacion no esta registrado en el sistema";
+                return $"El numero de liquidacion no esta registrado en el sistema";
             }
             catch (Exception e)
             {
@@ -57,13 +57,13 @@ namespace BLL
         {
             try
             {
-                if (pacienteRepository.Buscar(paciente.Identificacion) != null)
+                if (pacienteRepository.Buscar(paciente.NumLiquidacion) != null)
                 {
 
                     pacienteRepository.Modificar(paciente);
-                    return $"el paciente con identificacion {paciente.Identificacion} ha sido modificada satisfacatoriamente";
+                    return $"el paciente con numero de liquidacion {paciente.NumLiquidacion} ha sido modificada satisfacatoriamente";
                 }
-                return $"La identificacion {paciente.Identificacion} no se encuentra registrada por favor verifique los datos";
+                return $"La liquidacion {paciente.NumLiquidacion} no se encuentra registrada por favor verifique los datos";
 
             }
             catch (Exception ex)
@@ -73,16 +73,85 @@ namespace BLL
             }
 
         }
-        public List<Paciente> Consultar()
+
+        public RespuestaBusqueda Buscar(string NumLiquidacion)
         {
-            return pacienteRepository.Consultar();
+            RespuestaBusqueda respuesta = new RespuestaBusqueda();
+            try
+            {
+                respuesta.Error = false;
+                respuesta.paciente = pacienteRepository.Buscar(NumLiquidacion);
+                if (respuesta.paciente != null)
+                {
+                    respuesta.Mensaje = "Se encontro un Paciente /n ";
+                }
+                else
+                {
+                    respuesta.Mensaje = "No hay un paciente asociado  al numero digitado, VERIFIQUE!/n ";
+                }
+                return respuesta;
+            }
+            catch (Exception e)
+            {
+                respuesta.Error = true;
+                respuesta.Mensaje = "ERROR: " + e.Message;
+                respuesta.paciente = null;
+                return respuesta;
+            }
         }
+            public RespuestaConsulta ConsultarConsulta()
+            {
+                RespuestaConsulta respuesta = new RespuestaConsulta();
+                try
+                {
+                    respuesta.Error = false;
+                    respuesta.pacientes = pacienteRepository.Consultar();
+                    if (respuesta.pacientes != null)
+                    {
+                        respuesta.Mensaje = "LISTADO DE PACIENTES";
+                    }
+                    else
+                    {
+                        respuesta.Mensaje = "NO HAY DATOS";
+                    }
+                }
+                catch (Exception e)
+                {
 
-        public Paciente Buscar(string identificacion)
+                    respuesta.Error = true;
+                    respuesta.Mensaje = $"ERROR" + e.Message;
+                }
+                return respuesta;
+            }
+        
+
+            public Paciente BuscarId(string NumLiquidacion)
+            {
+                 try
+                 {
+                return pacienteRepository.Buscar(NumLiquidacion);
+                 }
+                  catch (Exception e)
+                 {
+                    string mensaje = " ERROR" + e.Message;
+                      return null;
+                 }
+
+            }
+
+
+        
+        public class RespuestaBusqueda
         {
-            return pacienteRepository.Buscar(identificacion);
-
+            public string Mensaje { get; set; }
+            public Paciente paciente { get; set; }
+            public bool Error { get; set; }
         }
-
+        public class RespuestaConsulta
+        {
+            public string Mensaje { get; set; }
+            public List<Paciente>pacientes { get; set; }
+            public bool Error { get; set; }
+        }
     }
 }

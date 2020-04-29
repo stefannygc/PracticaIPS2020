@@ -32,30 +32,34 @@ namespace DAL
             StreamReader streamReader = new StreamReader(fileStream);
             string linea = string.Empty;
             while ((linea = streamReader.ReadLine()) != null)
-            {
-                Paciente paciente = MapearPaciente(linea);
+             {     Paciente paciente ;
+                string[] datos = linea.Split(';');
+
+                if (datos[2].ToLower() == "subsidiado")
+                {
+                    paciente = new Subsidiado();
+                }
+                else
+                {
+                    paciente = new Contributivo();
+                }
+                paciente.Identificacion = (datos[0]); 
+                paciente.Tarifa = decimal.Parse(datos[1]);
+                paciente.NumLiquidacion = datos[2];
+                paciente.TipoAfiliacion = datos[3];
+                paciente.Salario = decimal.Parse(datos[4]);
+                paciente.ValorServicio = decimal.Parse(datos[5]);
+                paciente.CuotaModeradora = decimal.Parse(datos[6]);
                 pacientes.Add(paciente);
             }
             fileStream.Close();
             streamReader.Close();
             return pacientes;
         }
-            private static Paciente MapearPaciente(string linea)
-            {
-                Paciente paciente = new Paciente();
-                string[] datos = linea.Split(';');
-                paciente.Identificacion = datos[0];
-                paciente.NumLiquidacion = datos[1];
-                paciente.TipoAfiliacion = datos[2];
-                paciente.Salario = decimal.Parse(datos[3]);
-                paciente.ValorServicio = double.Parse(datos[4]);
-                paciente.CuotaModeradora = Convert.ToDouble(datos[5]);
-                return paciente;
-            }
-            
         
 
-        public void Eliminar( string identificacion) 
+
+        public void Eliminar( string numLiquidacion) 
         {
             pacientes.Clear();
             pacientes = Consultar();
@@ -63,7 +67,7 @@ namespace DAL
             fileStream.Close();
             foreach (var item in pacientes)
             {
-                if (item.Identificacion != identificacion)
+                if (item.NumLiquidacion != numLiquidacion)
                 {
                     Guardar(item);
                 }
@@ -78,7 +82,7 @@ namespace DAL
             fileStream.Close();
             foreach (var item in pacientes)
             {
-                if (item.Identificacion != paciente.Identificacion)
+                if (item.NumLiquidacion != paciente.NumLiquidacion)
                 {
                     Guardar(item);
                 }
@@ -88,14 +92,14 @@ namespace DAL
                 }
             }
         }
-        public Paciente Buscar(string identificacion)
+        public Paciente Buscar(string numLiquidacion)
         {
             pacientes.Clear();
             pacientes = Consultar();
-            Paciente paciente = new Paciente();
+          
             foreach (var item in pacientes)
             {
-                if (item.Identificacion.Equals(identificacion))
+                if (item.NumLiquidacion.Equals(numLiquidacion))
                 {
                     return item;
                 }

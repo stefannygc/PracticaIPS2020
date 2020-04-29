@@ -5,14 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static BLL.PacienteService;
 
 namespace PracticaIPS
 {
     class Program
     {
-        static Paciente paciente;
+
         static List<Paciente> pacientes = new List<Paciente>();
-        static PacienteService pacienteService = new PacienteService();
+        static PacienteService service = new PacienteService();
         static void Main(string[] args)
         {
             Menu();
@@ -26,140 +27,139 @@ namespace PracticaIPS
                 Console.Clear();
                 Console.WriteLine("\n******* Menu de IPS *******");
                 Console.WriteLine(" 1. Registrar");
-                Console.WriteLine(" 2. BuscarPaciente");
+                Console.WriteLine(" 2. Consulta general ");
                 Console.WriteLine(" 3. Modificar");
-                Console.WriteLine(" 4. Consultar");
-                Console.WriteLine(" 5. Eliminar");
-                Console.WriteLine(" 6. Salir");
+                Console.WriteLine(" 4. Eliminar");
+                Console.WriteLine(" 5. Salir");
 
                 Console.WriteLine("**************************************");
 
-                Console.Write("\n DIGITE UNA OPCION: "); opcion = Int32.Parse(Console.ReadLine());
+                Console.Write("\n DIGITE UNA OPCION: "); opcion = int.Parse(Console.ReadLine());
                 switch (opcion)
                 {
                     case 1: Registrar(); break;
-                    case 2: BuscarPaciente(); break;
-                    case 3: Modificar(); break;
-                    case 4: Consultar(); break;
-                    case 5: Eliminar(); break;
-                    case 6: Console.Write("\n Presione enter para salir..."); Console.ReadKey(); break;
+                    case 2: ConsultarConsulta(service); break;
+                    case 3: Modificar(service); break;
+                    case 4: Eliminar(); break;
+                    case 5: Console.Write("\n Presione enter para salir..."); Console.ReadKey(); break;
                     default: Console.WriteLine("\n Numero fuera de rango intente de nuevo..."); break;
                 }
-            } while (opcion != 3);
+            } while (opcion != 5);
         }
         public static void Registrar()
-        {
-            string mensaje;
-            Paciente paciente = new Paciente();
-            Console.WriteLine("Digite identificacion: ");
-            paciente.Identificacion = Console.ReadLine();
-            Console.WriteLine("Digite numero Liquidacion: ");
-            paciente.NumLiquidacion = Console.ReadLine();
-            Console.WriteLine("Digite Tipo de Afiliacion contributivo/Subsidiado :  ");
-            paciente.TipoAfiliacion = Console.ReadLine();
-            Console.WriteLine("Digite Salario que recibe:  ");
-            paciente.Salario = decimal.Parse(Console.ReadLine());
-            Console.WriteLine("Valor del Servicio: ");
-            paciente.ValorServicio = double.Parse(Console.ReadLine());
-            paciente.CalcularTarifa(paciente);
-            Console.WriteLine(paciente.CuotaModeradora);
-            mensaje = pacienteService.Guardar(paciente);
-            pacientes.Add(paciente);
-            Console.Write("\n Pulse enter para continuar...");
-            Console.ReadKey();
-           
-            
-        }
 
-        public static void BuscarPaciente()
         {
-            string identificacion;
-            Console.WriteLine($"\n Digite identificacion : "); identificacion = Console.ReadLine();
-            paciente = pacienteService.Buscar(identificacion);
-            if (paciente == null)
+            Paciente paciente;
+            Console.Clear();
+            string identificacion, numeroLiquidacion, tipoAfiliacion;
+            decimal salario, valorServicio, Tarifa;
+
+            Console.Write("Digite identificacion: ");
+            identificacion = Console.ReadLine();
+
+            Console.Write("Digite Tarifa: ");
+            Tarifa = decimal.Parse(Console.ReadLine());
+
+            Console.Write("Digite numero de liquidacion: ");
+            numeroLiquidacion = Console.ReadLine();
+
+            Console.Write("Digite tipo de afiliacion: ");
+            tipoAfiliacion = Console.ReadLine();
+
+            Console.Write("Digite salario devengado: ");
+            salario = decimal.Parse(Console.ReadLine());
+
+            Console.Write("Digite valor servicio de hospitalizacion: ");
+            valorServicio = decimal.Parse(Console.ReadLine());
+
+
+
+
+            if (tipoAfiliacion.ToLower() == "subsidiado")
             {
-                Console.WriteLine($"\n el numero de identificacion[{identificacion}] no existe");
+                paciente = new Subsidiado();
             }
             else
             {
-
-                Console.WriteLine("\n informacion de pacientes");
-                Console.WriteLine("\n ******************");
-                Console.WriteLine($" Identificacion: {paciente.Identificacion}");
-                Console.WriteLine($" Numero de liquidacion: {paciente.NumLiquidacion}");
-                Console.WriteLine($" Tipo de afiliacion[Contributivo / Subsidiado]:{paciente.TipoAfiliacion} ");
-                Console.WriteLine($" Salario: {paciente.Salario}");
-                Console.WriteLine($" Valor de Servicio: {paciente.ValorServicio}");
-                Console.WriteLine($" Tarifa: {paciente.CuotaModeradora}");
-                Console.WriteLine(" ***************************");
-
+                paciente = new Contributivo();
             }
-            Console.Write("\n Pulse enter para continuar......"); Console.ReadKey();
+
+
+            paciente.Identificacion = identificacion;
+            paciente.Tarifa = Tarifa;
+            paciente.NumLiquidacion = numeroLiquidacion;
+            paciente.TipoAfiliacion = tipoAfiliacion;
+            paciente.Salario = salario;
+            paciente.ValorServicio = valorServicio;
+            paciente.LiquidarCuotaModeradora();
+            pacientes.Add(paciente);
+
+            PacienteService service = new PacienteService();
+
+            string mensaje = service.Guardar(paciente);
+            Console.Write(mensaje);
+            Console.ReadKey();
+            Console.Clear();
 
 
         }
-        public static void Modificar()
-        {
-            Paciente paciente = new Paciente();
-            Console.WriteLine("Digite la identificacion a modificar :");
-            paciente.Identificacion = Console.ReadLine();
-            if (pacienteService.Buscar(paciente.Identificacion) != null)
-            {
-                Console.WriteLine("Digite identificacion a modificar:  ");
-                paciente.Identificacion = Console.ReadLine();
-                Console.WriteLine("Digite numero de Liquidacion a modificar:  ");
-                paciente.NumLiquidacion = Console.ReadLine();
-                Console.WriteLine("Digite Tipo de Afiliacion contributivo/Subsidiado a modificar:  ");
-                paciente.TipoAfiliacion = Console.ReadLine();
-                Console.WriteLine("Digite Salario que recibe a modificar:  ");
-                paciente.Salario = decimal.Parse(Console.ReadLine());
-                Console.WriteLine("Valor del Servicio a modificar:  ");
-                paciente.ValorServicio = double.Parse(Console.ReadLine());
-                paciente.CalcularTarifa(paciente);
-                string mensaje = pacienteService.Modificar(paciente);
-                Console.WriteLine(mensaje);
-                Menu();
 
+
+
+
+
+        public static void ConsultarConsulta(PacienteService service)
+        {
+            Console.Clear();
+            RespuestaConsulta respuestaConsulta = service.ConsultarConsulta();
+            Console.WriteLine(respuestaConsulta.Mensaje);
+            if (!respuestaConsulta.Error)
+            {
+
+                foreach (var item in respuestaConsulta.pacientes)
+                {
+                    Console.WriteLine(item.ToString());
+                }
             }
             Console.ReadKey();
+            Console.Clear();
         }
+
+        public static void Modificar(PacienteService service)
+        {
+            Console.Clear();
+
+            Console.WriteLine("\tModificar una liquidacion");
+            Console.Write("\tDigite numero de liquidacion: ");
+            string numeroLiquidacion;
+            numeroLiquidacion = Console.ReadLine();
+            RespuestaBusqueda respuestaBusqueda = service.Buscar(numeroLiquidacion);
+            Console.WriteLine(respuestaBusqueda.Mensaje);
+
+            Paciente paciente = service.BuscarId(numeroLiquidacion);
+            if (paciente != null)
+            {
+                Console.Write("Ingrese nuevo valor del servicio de hospitalizacion: ");
+                paciente.ValorServicio = decimal.Parse(Console.ReadLine());
+                paciente.LiquidarCuotaModeradora();
+                string mensaje = service.Modificar(paciente);
+                Console.Write(mensaje);
+                Console.WriteLine(paciente.ToString());
+                Console.ReadKey();
+                Console.Clear();
+            }
+        }
+
         public static void Eliminar()
         {
             ConsoleKeyInfo continuar;
             Console.WriteLine("Digite la identificacion que desea eliminar :");
             string identificacion = Console.ReadLine();
-            string mensajeEliminar = pacienteService.Eliminar(identificacion);
+            string mensajeEliminar = service.Eliminar(identificacion);
             Console.WriteLine(mensajeEliminar);
             continuar = Console.ReadKey();
         }
-
-        public static void Consultar()
-        {
-            List<Paciente> personas = pacienteService.Consultar();
-            if (personas.Count == 0)
-            {
-                Console.WriteLine("\n No hay pacientes registrados");
-            }
-            else
-            {
-                foreach (var itemPaciente in pacientes)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("\n Cosulta de Persona");
-                    Console.WriteLine("\n ******************");
-                    Console.WriteLine($" Identificacion: {itemPaciente.Identificacion}");
-                    Console.WriteLine($" Numero de liquidacion: {itemPaciente.NumLiquidacion}");
-                    Console.WriteLine($" Tipo de Afiliacion contributivo/Subsidiado: {itemPaciente.TipoAfiliacion}");
-                    Console.WriteLine($" Salario: {itemPaciente.Salario}");
-                    Console.WriteLine($" Valor de Servicio: {itemPaciente.ValorServicio}");
-                    Console.WriteLine($" Tarifa: {itemPaciente.CuotaModeradora}");
-                    Console.WriteLine(" ***************************");
-                }
-            }
-            Console.WriteLine("\n Pulse enter para continuar...."); Console.ReadKey();
-
-
-
-        }
     }
 }
+    
+
