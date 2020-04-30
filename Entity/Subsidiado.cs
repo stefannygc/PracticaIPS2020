@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entity
 {
-   public  class Subsidiado: Paciente
+   public  class Subsidiado: LiquidaCuota
     {
         public override void CalcularTarifa()
         {

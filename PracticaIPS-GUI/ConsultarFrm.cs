@@ -15,8 +15,8 @@ namespace PracticaIPS_GUI
     public partial class ConsultarFrm : Form
     {
        
-        IList<Paciente> pacientes = new List<Paciente>();
-        PacienteService service = new PacienteService();
+        IList<LiquidaCuota> liquidaCuotas = new List<LiquidaCuota>();
+        LiquidaCuotaService service = new LiquidaCuotaService();
         public ConsultarFrm()
         {
             InitializeComponent();
@@ -47,7 +47,7 @@ namespace PracticaIPS_GUI
                
             {
                
-                DtgPaciente.DataSource = service.ConsultarConsulta().pacientes;
+                DtgPaciente.DataSource = service.ConsultarConsulta().liquidaCuotas;
                 TodosTxt.Text = service.Totalizar().ToString();
             }
 

@@ -8,24 +8,24 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    public class PacienteService
+    public class LiquidaCuotaService
     {
-        private PacienteRepository pacienteRepository;
-        public PacienteService()
+        private LiquidaCuotaRepository liquidaCuotaRepository;
+        public LiquidaCuotaService()
         {
-            pacienteRepository = new PacienteRepository();
+            liquidaCuotaRepository = new LiquidaCuotaRepository();
         }
 
-        public string Guardar(Paciente paciente)
+        public string Guardar(LiquidaCuota liquidaCuota)
         {
             try
             {
-                if ((pacienteRepository.Buscar(paciente.NumLiquidacion)) == null)
+                if ((liquidaCuotaRepository.Buscar(liquidaCuota.NumLiquidacion)) == null)
                 {
-                    pacienteRepository.Guardar(paciente);
+                    liquidaCuotaRepository.Guardar(liquidaCuota);
                     return $"se guardaron los datos sactifactoriamente ";
                 }
-                return $"No es posible registrar al paciente con numero de liquidacion {paciente.NumLiquidacion} ya se encuentra registrado";
+                return $"No es posible registrar al paciente con numero de liquidacion {liquidaCuota.NumLiquidacion} ya se encuentra registrado";
 
             }
             catch (Exception ex)
@@ -40,9 +40,9 @@ namespace BLL
         {
             try
             {
-                if (pacienteRepository.Buscar(numLiquidacion) != null)
+                if (liquidaCuotaRepository.Buscar(numLiquidacion) != null)
                 {
-                    pacienteRepository.Eliminar(numLiquidacion);
+                    liquidaCuotaRepository.Eliminar(numLiquidacion);
                     return $"se elimino la liquidacion numero: {numLiquidacion} correctamente";
                 }
                 return $"El numero de liquidacion no esta registrado en el sistema";
@@ -53,17 +53,17 @@ namespace BLL
             }
 
         }
-        public string Modificar(Paciente paciente)
+        public string Modificar(LiquidaCuota liquidaCuota)
         {
             try
             {
-                if (pacienteRepository.Buscar(paciente.NumLiquidacion) != null)
+                if (liquidaCuotaRepository.Buscar(liquidaCuota.NumLiquidacion) != null)
                 {
 
-                    pacienteRepository.Modificar(paciente);
-                    return $"el paciente con numero de liquidacion {paciente.NumLiquidacion} ha sido modificada satisfacatoriamente";
+                    liquidaCuotaRepository.Modificar(liquidaCuota);
+                    return $"el paciente con numero de liquidacion {liquidaCuota.NumLiquidacion} ha sido modificada satisfacatoriamente";
                 }
-                return $"La liquidacion {paciente.NumLiquidacion} no se encuentra registrada por favor verifique los datos";
+                return $"La liquidacion {liquidaCuota.NumLiquidacion} no se encuentra registrada por favor verifique los datos";
 
             }
             catch (Exception ex)
@@ -80,8 +80,8 @@ namespace BLL
             try
             {
                 respuesta.Error = false;
-                respuesta.paciente = pacienteRepository.Buscar(NumLiquidacion);
-                if (respuesta.paciente != null)
+                respuesta.liquidaCuota = liquidaCuotaRepository.Buscar(NumLiquidacion);
+                if (respuesta.liquidaCuota != null)
                 {
                     respuesta.Mensaje = "Se encontro un Paciente /n ";
                 }
@@ -95,7 +95,7 @@ namespace BLL
             {
                 respuesta.Error = true;
                 respuesta.Mensaje = "ERROR: " + e.Message;
-                respuesta.paciente = null;
+                respuesta.liquidaCuota = null;
                 return respuesta;
             }
         }
@@ -105,8 +105,8 @@ namespace BLL
                 try
                 {
                     respuesta.Error = false;
-                    respuesta.pacientes = pacienteRepository.Consultar();
-                    if (respuesta.pacientes != null)
+                    respuesta.liquidaCuotas = liquidaCuotaRepository.Consultar();
+                    if (respuesta.liquidaCuotas != null)
                     {
                         respuesta.Mensaje = "LISTADO DE PACIENTES";
                     }
@@ -125,11 +125,11 @@ namespace BLL
             }
         
 
-            public Paciente BuscarId(string NumLiquidacion)
+            public LiquidaCuota BuscarId(string NumLiquidacion)
             {
                  try
                  {
-                return pacienteRepository.Buscar(NumLiquidacion);
+                return liquidaCuotaRepository.Buscar(NumLiquidacion);
                  }
                   catch (Exception e)
                  {
@@ -141,23 +141,23 @@ namespace BLL
 
         public int Totalizar()
         {
-            return pacienteRepository.Totalizar();
+            return liquidaCuotaRepository.Totalizar();
         }
         public int TotalizarSubsidiado()
         {
-            return pacienteRepository.TotalizarSubsidiado();
+            return liquidaCuotaRepository.TotalizarSubsidiado();
         }
         public int TotalizarContributivo()
         {
-            return pacienteRepository.TotalizarContributivo();
+            return liquidaCuotaRepository.TotalizarContributivo();
         }
-        public IList<Paciente> ListaContributivo()
+        public IList<LiquidaCuota> ListaContributivo()
         {
-            return pacienteRepository.ListaContributivo();
+            return liquidaCuotaRepository.ListaContributivo();
         }
-        public IList<Paciente> ListaSubsidiado()
+        public IList<LiquidaCuota> ListaSubsidiado()
         {
-            return pacienteRepository.ListaSubsidiado();
+            return liquidaCuotaRepository.ListaSubsidiado();
         }
 
 
@@ -166,13 +166,13 @@ namespace BLL
     public class RespuestaBusqueda
     {
         public string Mensaje { get; set; }
-        public Paciente paciente { get; set; }
+        public LiquidaCuota liquidaCuota { get; set; }
         public bool Error { get; set; }
     }
     public class RespuestaConsulta
     {
         public string Mensaje { get; set; }
-        public IList<Paciente> pacientes { get; set; }
+        public IList<LiquidaCuota> liquidaCuotas { get; set; }
         public bool Error { get; set; }
     }
 

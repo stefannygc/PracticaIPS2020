@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entity
 {
-    public abstract class Paciente
+    public abstract class LiquidaCuota
     {
         public string Identificacion { get; set; }
         public decimal Tarifa { get; set; }

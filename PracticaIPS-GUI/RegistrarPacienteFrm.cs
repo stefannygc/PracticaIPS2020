@@ -15,9 +15,9 @@ namespace PracticaIPS_GUI
 {
     public partial class RegistrarPacienteFrm : Form
     {
-        Paciente paciente;
-        
-        PacienteService service = new PacienteService();
+        LiquidaCuota liquidaCuota;
+
+        LiquidaCuotaService service = new LiquidaCuotaService();
         public RegistrarPacienteFrm()
         {
             InitializeComponent();
@@ -25,57 +25,57 @@ namespace PracticaIPS_GUI
             
         }
         
-        private Paciente MapearPaciente()
+        private LiquidaCuota MapearPaciente()
         {
-            if (paciente != null) { 
-              paciente.Identificacion = IdentificacionTxt.Text;
-              //paciente.Tarifa = Convert.ToDecimal(TarifaTxt.Text);
-              paciente.NumLiquidacion =  NumLiquidacionTxt.Text;
-              paciente.TipoAfiliacion = cmbTipoAfiliacion.Text;
-              paciente.Salario = Convert.ToDecimal(TarifaTxt.Text);
-              paciente.ValorServicio = Convert.ToDecimal(ValorServicioTxt.Text);
-              paciente.CuotaModeradora = Convert.ToDecimal(CuotaTxt.Text);
+            if (liquidaCuota != null) {
+                liquidaCuota.Identificacion = IdentificacionTxt.Text;
+                //liquidaCuota.Tarifa = Convert.ToDecimal(TarifaTxt.Text);
+                liquidaCuota.NumLiquidacion =  NumLiquidacionTxt.Text;
+                liquidaCuota.TipoAfiliacion = cmbTipoAfiliacion.Text;
+                liquidaCuota.Salario = Convert.ToDecimal(TarifaTxt.Text);
+                liquidaCuota.ValorServicio = Convert.ToDecimal(ValorServicioTxt.Text);
+                liquidaCuota.CuotaModeradora = Convert.ToDecimal(CuotaTxt.Text);
                
-            }return paciente;
+            }return liquidaCuota;
         }
         private void GuardarBtn_Click(object sender, EventArgs e)
         {
-            Paciente paciente = MapearPaciente();
+            LiquidaCuota liquidaCuota = MapearPaciente();
             if (cmbTipoAfiliacion.Text == "subsidiado") 
             {
-                paciente = new Subsidiado();
+                liquidaCuota = new Subsidiado();
             }
             else
             {
-                paciente = new Contributivo();
+                liquidaCuota = new Contributivo();
             }
 
 
-            paciente.Identificacion = IdentificacionTxt.Text;
-            //paciente.Tarifa = decimal.Parse(TarifaTxt.Text);
-            paciente.NumLiquidacion = NumLiquidacionTxt.Text;
-            paciente.TipoAfiliacion = cmbTipoAfiliacion.Text;
-            paciente.Salario = decimal.Parse(SalarioTxt.Text);
-            paciente.ValorServicio = decimal.Parse(ValorServicioTxt.Text);
-            CuotaTxt.Text = paciente.CuotaModeradora.ToString();
+            liquidaCuota.Identificacion = IdentificacionTxt.Text;
+            //liquidaCuota.Tarifa = decimal.Parse(TarifaTxt.Text);
+            liquidaCuota.NumLiquidacion = NumLiquidacionTxt.Text;
+            liquidaCuota.TipoAfiliacion = cmbTipoAfiliacion.Text;
+            liquidaCuota.Salario = decimal.Parse(SalarioTxt.Text);
+            liquidaCuota.ValorServicio = decimal.Parse(ValorServicioTxt.Text);
+            CuotaTxt.Text = liquidaCuota.CuotaModeradora.ToString();
 
-            PacienteService service = new PacienteService();
-            paciente.LiquidarCuotaModeradora();
-            CuotaTxt.Text = paciente.CuotaModeradora.ToString();
-            string mensaje = service.Guardar(paciente);
+            LiquidaCuotaService service = new LiquidaCuotaService();
+            liquidaCuota.LiquidarCuotaModeradora();
+            CuotaTxt.Text = liquidaCuota.CuotaModeradora.ToString();
+            string mensaje = service.Guardar(liquidaCuota);
             MessageBox.Show(mensaje, "Mensaje de Guardado", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             Limpiar();
         }
 
         private void BuscarBtn_Click(object sender, EventArgs e)
         {
-            Console.Clear();
+            
             RespuestaConsulta respuestaConsulta = service.ConsultarConsulta();
             Console.WriteLine(respuestaConsulta.Mensaje);
             if (!respuestaConsulta.Error)
             {
 
-                foreach (var item in respuestaConsulta.pacientes)
+                foreach (var item in respuestaConsulta.liquidaCuotas)
                 {
                     Console.WriteLine(item.ToString());
                 }
@@ -96,15 +96,15 @@ namespace PracticaIPS_GUI
             RespuestaBusqueda respuestaBusqueda = service.Buscar(numeroLiquidacion);
             Console.WriteLine(respuestaBusqueda.Mensaje);
 
-            Paciente paciente = service.BuscarId(numeroLiquidacion);
-            if (paciente != null)
+            LiquidaCuota liquidaCuota = service.BuscarId(numeroLiquidacion);
+            if (liquidaCuota != null)
             {
                 Console.Write("Ingrese nuevo valor del servicio de hospitalizacion: ");
-                paciente.ValorServicio = decimal.Parse(Console.ReadLine());
-                paciente.LiquidarCuotaModeradora();
-                string mensaje = service.Modificar(paciente);
+                liquidaCuota.ValorServicio = decimal.Parse(Console.ReadLine());
+                liquidaCuota.LiquidarCuotaModeradora();
+                string mensaje = service.Modificar(liquidaCuota);
                 Console.Write(mensaje);
-                Console.WriteLine(paciente.ToString());
+                Console.WriteLine(liquidaCuota.ToString());
                 Console.ReadKey();
                 Console.Clear();
             }

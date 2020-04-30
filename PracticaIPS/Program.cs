@@ -5,15 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static BLL.PacienteService;
+using static BLL.LiquidaCuotaService;
 
 namespace PracticaIPS
 {
     class Program
     {
 
-        static List<Paciente> pacientes = new List<Paciente>();
-        static PacienteService service = new PacienteService();
+        static List<LiquidaCuota> liquidaCuotas = new List<LiquidaCuota>();
+        static LiquidaCuotaService service = new LiquidaCuotaService();
         static void Main(string[] args)
         {
             Menu();
@@ -49,7 +49,7 @@ namespace PracticaIPS
         public static void Registrar()
 
         {
-            Paciente paciente;
+            LiquidaCuota liquidaCuota;
             Console.Clear();
             string identificacion, numeroLiquidacion, tipoAfiliacion;
             decimal salario, valorServicio, Tarifa;
@@ -77,26 +77,26 @@ namespace PracticaIPS
 
             if (tipoAfiliacion.ToLower() == "subsidiado")
             {
-                paciente = new Subsidiado();
+                liquidaCuota = new Subsidiado();
             }
             else
             {
-                paciente = new Contributivo();
+                liquidaCuota = new Contributivo();
             }
 
 
-            paciente.Identificacion = identificacion;
-            paciente.Tarifa = Tarifa;
-            paciente.NumLiquidacion = numeroLiquidacion;
-            paciente.TipoAfiliacion = tipoAfiliacion;
-            paciente.Salario = salario;
-            paciente.ValorServicio = valorServicio;
-            paciente.CalcularCuotaModeradora();
-            pacientes.Add(paciente);
+            liquidaCuota.Identificacion = identificacion;
+            liquidaCuota.Tarifa = Tarifa;
+            liquidaCuota.NumLiquidacion = numeroLiquidacion;
+            liquidaCuota.TipoAfiliacion = tipoAfiliacion;
+            liquidaCuota.Salario = salario;
+            liquidaCuota.ValorServicio = valorServicio;
+            liquidaCuota.CalcularCuotaModeradora();
+            liquidaCuotas.Add(liquidaCuota);
 
-            PacienteService service = new PacienteService();
+            LiquidaCuotaService service = new LiquidaCuotaService();
 
-            string mensaje = service.Guardar(paciente);
+            string mensaje = service.Guardar(liquidaCuota);
             Console.Write(mensaje);
             Console.ReadKey();
             Console.Clear();
@@ -108,7 +108,7 @@ namespace PracticaIPS
 
 
 
-        public static void ConsultarConsulta(PacienteService service)
+        public static void ConsultarConsulta(LiquidaCuotaService service)
         {
             Console.Clear();
             RespuestaConsulta respuestaConsulta = service.ConsultarConsulta();
@@ -116,7 +116,7 @@ namespace PracticaIPS
             if (!respuestaConsulta.Error)
             {
 
-                foreach (var item in respuestaConsulta.pacientes)
+                foreach (var item in respuestaConsulta.liquidaCuotas)
                 {
                     Console.WriteLine(item.ToString());
                 }
@@ -125,7 +125,7 @@ namespace PracticaIPS
             Console.Clear();
         }
 
-        public static void Modificar(PacienteService service)
+        public static void Modificar(LiquidaCuotaService service)
         {
             Console.Clear();
 
@@ -136,15 +136,15 @@ namespace PracticaIPS
             RespuestaBusqueda respuestaBusqueda = service.Buscar(numeroLiquidacion);
             Console.WriteLine(respuestaBusqueda.Mensaje);
 
-            Paciente paciente = service.BuscarId(numeroLiquidacion);
-            if (paciente != null)
+            LiquidaCuota liquidaCuota = service.BuscarId(numeroLiquidacion);
+            if (liquidaCuota != null)
             {
                 Console.Write("Ingrese nuevo valor del servicio de hospitalizacion: ");
-                paciente.ValorServicio = decimal.Parse(Console.ReadLine());
-                paciente.CalcularCuotaModeradora();
-                string mensaje = service.Modificar(paciente);
+                liquidaCuota.ValorServicio = decimal.Parse(Console.ReadLine());
+                liquidaCuota.CalcularCuotaModeradora();
+                string mensaje = service.Modificar(liquidaCuota);
                 Console.Write(mensaje);
-                Console.WriteLine(paciente.ToString());
+                Console.WriteLine(liquidaCuota.ToString());
                 Console.ReadKey();
                 Console.Clear();
             }

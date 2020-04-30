@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contributivo.cs" />
-    <Compile Include="Paciente.cs" />
+    <Compile Include="LiquidaCuota.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Subsidiado.cs" />
   </ItemGroup>
