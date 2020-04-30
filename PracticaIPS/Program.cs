@@ -91,7 +91,7 @@ namespace PracticaIPS
             paciente.TipoAfiliacion = tipoAfiliacion;
             paciente.Salario = salario;
             paciente.ValorServicio = valorServicio;
-            paciente.LiquidarCuotaModeradora();
+            paciente.CalcularCuotaModeradora();
             pacientes.Add(paciente);
 
             PacienteService service = new PacienteService();
@@ -141,7 +141,7 @@ namespace PracticaIPS
             {
                 Console.Write("Ingrese nuevo valor del servicio de hospitalizacion: ");
                 paciente.ValorServicio = decimal.Parse(Console.ReadLine());
-                paciente.LiquidarCuotaModeradora();
+                paciente.CalcularCuotaModeradora();
                 string mensaje = service.Modificar(paciente);
                 Console.Write(mensaje);
                 Console.WriteLine(paciente.ToString());

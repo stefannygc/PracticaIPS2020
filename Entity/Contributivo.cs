@@ -10,25 +10,23 @@ namespace Entity
     {
         public override void CalcularTarifa()
         {
-            SALARIOMINIMO = 980657;
-            if (Salario < SALARIOMINIMO * 2)
+            SALARIOMINIMO = 877803;
+            if (Salario < (2 * SALARIOMINIMO))
             {
-                Tarifa = 0.15M;
-                Tope= 250000;
+                Tarifa = 0.15M; Tope = 250000;
+
             }
-            if ((Salario >= SALARIOMINIMO * 2) && (Salario <= SALARIOMINIMO * 5))
+
+            if ((Salario >= 2 * SALARIOMINIMO) && (Salario<= 5 * SALARIOMINIMO))
             {
-                Tarifa = 0.20M;
-                Tope = 900000;
+                Tarifa = 0.20M; Tope = 900000;
+
+
             }
-            if (Salario > SALARIOMINIMO * 5)
+            if (Salario > (5 * SALARIOMINIMO))
             {
                 Tarifa = 0.25M; Tope = 1500000;
 
-            }
-            else
-            {
-                Tarifa = 5M;
             }
         }
     }

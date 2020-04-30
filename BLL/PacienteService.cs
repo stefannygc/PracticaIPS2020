@@ -139,19 +139,42 @@ namespace BLL
 
             }
 
+        public int Totalizar()
+        {
+            return pacienteRepository.Totalizar();
+        }
+        public int TotalizarSubsidiado()
+        {
+            return pacienteRepository.TotalizarSubsidiado();
+        }
+        public int TotalizarContributivo()
+        {
+            return pacienteRepository.TotalizarContributivo();
+        }
+        public IList<Paciente> ListaContributivo()
+        {
+            return pacienteRepository.ListaContributivo();
+        }
+        public IList<Paciente> ListaSubsidiado()
+        {
+            return pacienteRepository.ListaSubsidiado();
+        }
 
-        
-        public class RespuestaBusqueda
-        {
-            public string Mensaje { get; set; }
-            public Paciente paciente { get; set; }
-            public bool Error { get; set; }
-        }
-        public class RespuestaConsulta
-        {
-            public string Mensaje { get; set; }
-            public List<Paciente>pacientes { get; set; }
-            public bool Error { get; set; }
-        }
+
+
     }
+    public class RespuestaBusqueda
+    {
+        public string Mensaje { get; set; }
+        public Paciente paciente { get; set; }
+        public bool Error { get; set; }
+    }
+    public class RespuestaConsulta
+    {
+        public string Mensaje { get; set; }
+        public IList<Paciente> pacientes { get; set; }
+        public bool Error { get; set; }
+    }
+
+   
 }

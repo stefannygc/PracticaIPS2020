@@ -19,10 +19,10 @@ namespace Entity
        public  decimal SALARIOMINIMO {get; set;}
         
         public abstract void CalcularTarifa();
-        public void CalcularCuotaModeradora()
+        public decimal CalcularCuotaModeradora()
         {
             CuotaModeradora = ValorServicio * Tarifa;
-
+            return CuotaModeradora;
         }
         public void LiquidarCuotaModeradora()
         {
@@ -49,7 +49,7 @@ namespace Entity
         }
         public override string ToString()
         {
-            return $"{Identificacion};{Tarifa};{NumLiquidacion};{TipoAfiliacion};{Salario};{ValorServicio};{CuotaModeradora}";
+            return $"{Identificacion};{Tarifa};{NumLiquidacion};{TipoAfiliacion};{Salario};{ValorServicio};{CuotaModeradora};{Tope};{SALARIOMINIMO}";
         }
 
     }

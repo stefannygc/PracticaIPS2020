@@ -11,7 +11,7 @@ namespace DAL
     public class PacienteRepository
     {
         private string ruta = @"Paciente.txt";
-        private List<Paciente> pacientes;
+        private IList<Paciente> pacientes;
         public PacienteRepository()
         {
             pacientes = new List<Paciente>();
@@ -25,38 +25,57 @@ namespace DAL
             fileStream.Close();
         }
 
-        public List<Paciente> Consultar()
+        public IList<Paciente> Consultar()
         {
+            pacientes = new List<Paciente>();
+            string linea = string.Empty;
             pacientes.Clear();
             FileStream fileStream = new FileStream(ruta, FileMode.OpenOrCreate);
             StreamReader streamReader = new StreamReader(fileStream);
-            string linea = string.Empty;
-            while ((linea = streamReader.ReadLine()) != null)
-             {     Paciente paciente ;
-                string[] datos = linea.Split(';');
 
-                if (datos[2].ToLower() == "subsidiado")
-                {
-                    paciente = new Subsidiado();
-                }
-                else
-                {
-                    paciente = new Contributivo();
-                }
-                paciente.Identificacion = (datos[0]); 
-                paciente.Tarifa = decimal.Parse(datos[1]);
-                paciente.NumLiquidacion = datos[2];
-                paciente.TipoAfiliacion = datos[3];
-                paciente.Salario = decimal.Parse(datos[4]);
-                paciente.ValorServicio = decimal.Parse(datos[5]);
-                paciente.CuotaModeradora = decimal.Parse(datos[6]);
+            while ((linea = streamReader.ReadLine()) != null)
+            {
+                Paciente paciente = MapearPaciente(linea);
                 pacientes.Add(paciente);
             }
             fileStream.Close();
             streamReader.Close();
             return pacientes;
         }
+        private static Paciente MapearPaciente(string linea)
+        {
+            Paciente paciente;
+            char delimiter = ';';
+            string[] datos = linea.Split(delimiter);
+
+
+            if (datos[2].ToLower() == "Contributivo")
+            {
+                paciente = new Contributivo();
+            }
+            else
+            {
+                paciente = new Subsidiado();
+            }
+            paciente.Identificacion = (datos[0]);
+            paciente.Tarifa = decimal.Parse(datos[1]);
+            paciente.NumLiquidacion = datos[2];
+            paciente.TipoAfiliacion = datos[3];
+            paciente.Salario = decimal.Parse(datos[4]);
+            paciente.ValorServicio = decimal.Parse(datos[5]);
+            paciente.CuotaModeradora = decimal.Parse(datos[6]);
+            paciente.Tope = decimal.Parse(datos[7]);
+            paciente.SALARIOMINIMO= decimal.Parse(datos[8]);
+            return paciente;
+
+
+
+
+        }
+           
+           
         
+
 
 
         public void Eliminar( string numLiquidacion) 
@@ -105,6 +124,30 @@ namespace DAL
                 }
             }
             return null;
+        }
+        public int Totalizar()
+        {
+            return pacientes.Count();
+        }
+        public int TotalizarSubsidiado()
+        {
+            return pacientes.Where(p => p.TipoAfiliacion.Equals("Subsidiado")).Count();
+        }
+        public int TotalizarContributivo()
+        {
+            return pacientes.Where(p => p.TipoAfiliacion.Equals("Contributivo")).Count();
+        }
+        public IList<Paciente> ListaFiltrada(string Tipo)
+        {
+            return pacientes.Where(p => p.TipoAfiliacion.Equals(Tipo)).ToList();
+        }
+        public IList<Paciente> ListaSubsidiado()
+        {
+            return pacientes.Where(p => p.TipoAfiliacion.Equals("Subsidiado")).ToList();
+        }
+        public IList<Paciente> ListaContributivo()
+        {
+            return pacientes.Where(p => p.TipoAfiliacion.Equals("Contributivo")).ToList();
         }
     }
 }
