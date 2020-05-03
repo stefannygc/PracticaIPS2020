@@ -20,12 +20,12 @@ namespace BLL
         {
             try
             {
-                if ((liquidaCuotaRepository.Buscar(liquidaCuota.NumLiquidacion)) == null)
+                if ((liquidaCuotaRepository.Buscar(liquidaCuota.Identificacion)) == null)
                 {
                     liquidaCuotaRepository.Guardar(liquidaCuota);
                     return $"se guardaron los datos sactifactoriamente ";
                 }
-                return $"No es posible registrar al paciente con numero de liquidacion {liquidaCuota.NumLiquidacion} ya se encuentra registrado";
+                return $"No es posible registrar al paciente con  {liquidaCuota.Identificacion} ya se encuentra registrado";
 
             }
             catch (Exception ex)
@@ -36,16 +36,16 @@ namespace BLL
 
         }
 
-        public string Eliminar(string numLiquidacion)
+        public string Eliminar(string identificacion)
         {
             try
             {
-                if (liquidaCuotaRepository.Buscar(numLiquidacion) != null)
+                if (liquidaCuotaRepository.Buscar(identificacion) != null)
                 {
-                    liquidaCuotaRepository.Eliminar(numLiquidacion);
-                    return $"se elimino la liquidacion numero: {numLiquidacion} correctamente";
+                    liquidaCuotaRepository.Eliminar(identificacion);
+                    return $"se elimino la identificacion numero: {identificacion} correctamente";
                 }
-                return $"El numero de liquidacion no esta registrado en el sistema";
+                return $"El numero de identificacion no esta registrado en el sistema";
             }
             catch (Exception e)
             {
@@ -57,14 +57,14 @@ namespace BLL
         {
             try
             {
-                if (liquidaCuotaRepository.Buscar(liquidaCuota.NumLiquidacion) != null)
+                if (liquidaCuotaRepository.Buscar(liquidaCuota.Identificacion) != null)
                 {
 
                     liquidaCuotaRepository.Modificar(liquidaCuota);
-                    return $"el paciente con numero de liquidacion {liquidaCuota.NumLiquidacion} ha sido modificada satisfacatoriamente";
+                    return $"el paciente con numero de identificacion {liquidaCuota.Identificacion} ha sido modificada satisfacatoriamente";
                 }
-                return $"La liquidacion {liquidaCuota.NumLiquidacion} no se encuentra registrada por favor verifique los datos";
-
+                return $"La identificacion {liquidaCuota.Identificacion} no se encuentra registrada por favor verifique los datos";
+                    
             }
             catch (Exception ex)
             {
@@ -74,13 +74,13 @@ namespace BLL
 
         }
 
-        public RespuestaBusqueda Buscar(string NumLiquidacion)
+        public RespuestaBusqueda Buscar(string Identificacion)
         {
             RespuestaBusqueda respuesta = new RespuestaBusqueda();
             try
             {
                 respuesta.Error = false;
-                respuesta.liquidaCuota = liquidaCuotaRepository.Buscar(NumLiquidacion);
+                respuesta.liquidaCuota = liquidaCuotaRepository.Buscar(Identificacion);
                 if (respuesta.liquidaCuota != null)
                 {
                     respuesta.Mensaje = "Se encontro un Paciente /n ";
@@ -108,7 +108,7 @@ namespace BLL
                     respuesta.liquidaCuotas = liquidaCuotaRepository.Consultar();
                     if (respuesta.liquidaCuotas != null)
                     {
-                        respuesta.Mensaje = "LISTADO DE PACIENTES";
+                        respuesta.Mensaje = "LISTADO DE LIQUIDACIONES";
                     }
                     else
                     {
@@ -125,11 +125,11 @@ namespace BLL
             }
         
 
-            public LiquidaCuota BuscarId(string NumLiquidacion)
+            public LiquidaCuota BuscarId(string Identificacion)
             {
                  try
                  {
-                return liquidaCuotaRepository.Buscar(NumLiquidacion);
+                return liquidaCuotaRepository.Buscar(Identificacion);
                  }
                   catch (Exception e)
                  {
@@ -159,7 +159,18 @@ namespace BLL
         {
             return liquidaCuotaRepository.ListaSubsidiado();
         }
-
+        public decimal TotalCuotaModeradoras()
+        {
+            return liquidaCuotaRepository.TotalCuotaModeradoras();
+        }
+        public decimal SumaLiquidacionSubsidiado()
+        {
+            return liquidaCuotaRepository.SumaLiquidacionSubsidiado();
+        }
+        public decimal SumaLiquidacionContributivo()
+        {
+            return liquidaCuotaRepository.SumaLiquidacionContributivo();
+        }
 
 
     }

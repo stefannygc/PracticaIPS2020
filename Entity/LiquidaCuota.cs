@@ -8,7 +8,9 @@ namespace Entity
 {
     public abstract class LiquidaCuota
     {
+        public DateTime Fecha { get; set; }
         public string Identificacion { get; set; }
+        public string Nombre { get; set; }
         public decimal Tarifa { get; set; }
         public string NumLiquidacion { get; set; }
         public string TipoAfiliacion { get; set; }
@@ -49,7 +51,7 @@ namespace Entity
         }
         public override string ToString()
         {
-            return $"{Identificacion};{Tarifa};{NumLiquidacion};{TipoAfiliacion};{Salario};{ValorServicio};{CuotaModeradora};{Tope};{SALARIOMINIMO}";
+            return $"{Fecha};{Identificacion};{Nombre};{Tarifa};{NumLiquidacion};{TipoAfiliacion};{Salario};{ValorServicio};{CuotaModeradora};{Tope};{SALARIOMINIMO}";
         }
 
     }

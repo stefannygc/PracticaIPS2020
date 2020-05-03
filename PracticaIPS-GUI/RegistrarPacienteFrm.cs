@@ -13,12 +13,12 @@ using System.Windows.Forms;
 
 namespace PracticaIPS_GUI
 {
-    public partial class RegistrarPacienteFrm : Form
+    public partial class RegistrarLiquidaCuotaFrm : Form
     {
         LiquidaCuota liquidaCuota;
 
         LiquidaCuotaService service = new LiquidaCuotaService();
-        public RegistrarPacienteFrm()
+        public RegistrarLiquidaCuotaFrm()
         {
             InitializeComponent();
            
@@ -27,21 +27,7 @@ namespace PracticaIPS_GUI
         
         private LiquidaCuota MapearPaciente()
         {
-            if (liquidaCuota != null) {
-                liquidaCuota.Identificacion = IdentificacionTxt.Text;
-                //liquidaCuota.Tarifa = Convert.ToDecimal(TarifaTxt.Text);
-                liquidaCuota.NumLiquidacion =  NumLiquidacionTxt.Text;
-                liquidaCuota.TipoAfiliacion = cmbTipoAfiliacion.Text;
-                liquidaCuota.Salario = Convert.ToDecimal(TarifaTxt.Text);
-                liquidaCuota.ValorServicio = Convert.ToDecimal(ValorServicioTxt.Text);
-                liquidaCuota.CuotaModeradora = Convert.ToDecimal(CuotaTxt.Text);
-               
-            }return liquidaCuota;
-        }
-        private void GuardarBtn_Click(object sender, EventArgs e)
-        {
-            LiquidaCuota liquidaCuota = MapearPaciente();
-            if (cmbTipoAfiliacion.Text == "subsidiado") 
+            if (cmbTipoAfiliacion.Text == "subsidiado")
             {
                 liquidaCuota = new Subsidiado();
             }
@@ -51,8 +37,25 @@ namespace PracticaIPS_GUI
             }
 
 
+            if (liquidaCuota != null) {
+                liquidaCuota.Fecha = FechaDTP.Value;
+                liquidaCuota.Identificacion = IdentificacionTxt.Text;
+                liquidaCuota.Nombre = NombreTxt.Text;
+                liquidaCuota.NumLiquidacion =  NumLiquidacionTxt.Text;
+                liquidaCuota.TipoAfiliacion = cmbTipoAfiliacion.Text;
+                liquidaCuota.Salario = decimal.Parse(SalarioTxt.Text);
+                liquidaCuota.ValorServicio = decimal.Parse(ValorServicioTxt.Text);
+                liquidaCuota.CuotaModeradora = decimal.Parse(CuotaTxt.Text);
+               
+            }return liquidaCuota;
+        }
+        private void GuardarBtn_Click(object sender, EventArgs e)
+        {
+            LiquidaCuota liquidaCuota = MapearPaciente();
+         
+            liquidaCuota.Fecha = FechaDTP.Value;
             liquidaCuota.Identificacion = IdentificacionTxt.Text;
-            //liquidaCuota.Tarifa = decimal.Parse(TarifaTxt.Text);
+            liquidaCuota.Nombre = NombreTxt.Text;
             liquidaCuota.NumLiquidacion = NumLiquidacionTxt.Text;
             liquidaCuota.TipoAfiliacion = cmbTipoAfiliacion.Text;
             liquidaCuota.Salario = decimal.Parse(SalarioTxt.Text);
@@ -67,63 +70,74 @@ namespace PracticaIPS_GUI
             Limpiar();
         }
 
+      
         private void BuscarBtn_Click(object sender, EventArgs e)
-        {
-            
-            RespuestaConsulta respuestaConsulta = service.ConsultarConsulta();
-            Console.WriteLine(respuestaConsulta.Mensaje);
-            if (!respuestaConsulta.Error)
-            {
-
-                foreach (var item in respuestaConsulta.liquidaCuotas)
+        { 
+            string mensaje;
+            try {
+               
+                string Identificacion = IdentificacionTxt.Text.Trim();
+                liquidaCuota = service.BuscarId(Identificacion);
+                if (liquidaCuota != null)
                 {
-                    Console.WriteLine(item.ToString());
+                    IdentificacionTxt.Text = liquidaCuota.Identificacion;
+                    NombreTxt.Text = liquidaCuota.Nombre;
+                    NumLiquidacionTxt.Text = liquidaCuota.NumLiquidacion;
+                    cmbTipoAfiliacion.Text = liquidaCuota.TipoAfiliacion;
+                    SalarioTxt.Text = Convert.ToString(liquidaCuota.Salario);
+                    ValorServicioTxt.Text = Convert.ToString(liquidaCuota.ValorServicio);
+                    CuotaTxt.Text = Convert.ToString(liquidaCuota.CuotaModeradora);
+
                 }
+                else
+                {
+                    mensaje =($"La persona con Identificacion:  {Identificacion} No se encuentra Registrada");
+                    Limpiar();
+
+                }
+
+            }catch (Exception error) {
+                   mensaje = Convert.ToString(error);
             }
            
         }
     
     
+    
 
         private void ModificarBtn_Click(object sender, EventArgs e)
         {
-            Console.Clear();
-
-            Console.WriteLine("\tModificar una liquidacion");
-            Console.Write("\tDigite numero de liquidacion: ");
-            string numeroLiquidacion;
-            numeroLiquidacion = Console.ReadLine();
-            RespuestaBusqueda respuestaBusqueda = service.Buscar(numeroLiquidacion);
-            Console.WriteLine(respuestaBusqueda.Mensaje);
-
-            LiquidaCuota liquidaCuota = service.BuscarId(numeroLiquidacion);
+            LiquidaCuota liquidaCuota = MapearPaciente();
+            string NumLiquidacion;
+            NumLiquidacion = NumLiquidacionTxt.Text;
+            RespuestaBusqueda respuestaBusqueda = service.Buscar(NumLiquidacion);
             if (liquidaCuota != null)
-            {
-                Console.Write("Ingrese nuevo valor del servicio de hospitalizacion: ");
-                liquidaCuota.ValorServicio = decimal.Parse(Console.ReadLine());
+            { 
+                liquidaCuota.ValorServicio = decimal.Parse(ValorServicioTxt.Text);
                 liquidaCuota.LiquidarCuotaModeradora();
+                CuotaTxt.Text = liquidaCuota.CuotaModeradora.ToString();
                 string mensaje = service.Modificar(liquidaCuota);
-                Console.Write(mensaje);
-                Console.WriteLine(liquidaCuota.ToString());
-                Console.ReadKey();
-                Console.Clear();
+                MessageBox.Show(mensaje);
+                Limpiar();
             }
+
+           
         }
 
         private void EliminarBtn_Click(object sender, EventArgs e)
         {
-            ConsoleKeyInfo continuar;
-            Console.WriteLine("Digite la identificacion que desea eliminar :");
-            string identificacion = Console.ReadLine();
+            
+            string identificacion = IdentificacionTxt.Text;
             string mensajeEliminar = service.Eliminar(identificacion);
-            Console.WriteLine(mensajeEliminar);
-            continuar = Console.ReadKey();
+            MessageBox.Show(mensajeEliminar);
+            Limpiar();
+
         }
         private void Limpiar()
         {
             IdentificacionTxt.Text = "";
             NumLiquidacionTxt.Text = "";
-            //TarifaTxt.Text = "";
+            NombreTxt.Text ="";
             cmbTipoAfiliacion.Text = "";
             SalarioTxt.Text = "";
             ValorServicioTxt.Text = "";
@@ -131,5 +145,7 @@ namespace PracticaIPS_GUI
             IdentificacionTxt.Focus();
 
         }
+
+      
     }
 }

@@ -57,22 +57,24 @@ namespace DAL
             {
                 liquidaCuota = new Subsidiado();
             }
-            liquidaCuota.Identificacion = (datos[0]);
-            liquidaCuota.Tarifa = decimal.Parse(datos[1]);
-            liquidaCuota.NumLiquidacion = datos[2];
-            liquidaCuota.TipoAfiliacion = datos[3];
-            liquidaCuota.Salario = decimal.Parse(datos[4]);
-            liquidaCuota.ValorServicio = decimal.Parse(datos[5]);
-            liquidaCuota.CuotaModeradora = decimal.Parse(datos[6]);
-            liquidaCuota.Tope = decimal.Parse(datos[7]);
-            liquidaCuota.SALARIOMINIMO= decimal.Parse(datos[8]);
+            liquidaCuota.Fecha = DateTime.Parse(datos[0]);
+            liquidaCuota.Identificacion = (datos[1]);
+            liquidaCuota.Nombre = datos[2];
+            liquidaCuota.Tarifa = decimal.Parse(datos[3]);
+            liquidaCuota.NumLiquidacion = datos[4];
+            liquidaCuota.TipoAfiliacion = datos[5];
+            liquidaCuota.Salario = decimal.Parse(datos[6]);
+            liquidaCuota.ValorServicio = decimal.Parse(datos[7]);
+            liquidaCuota.CuotaModeradora = decimal.Parse(datos[8]);
+            liquidaCuota.Tope = decimal.Parse(datos[9]);
+            liquidaCuota.SALARIOMINIMO= decimal.Parse(datos[10]);
             return liquidaCuota;
 
 
         }
            
       
-        public void Eliminar( string numLiquidacion) 
+        public void Eliminar( string identificacion) 
         {
             liquidaCuotas.Clear();
             liquidaCuotas = Consultar();
@@ -80,7 +82,7 @@ namespace DAL
             fileStream.Close();
             foreach (var item in liquidaCuotas)
             {
-                if (item.NumLiquidacion != numLiquidacion)
+                if (item.Identificacion != identificacion)
                 {
                     Guardar(item);
                 }
@@ -95,7 +97,7 @@ namespace DAL
             fileStream.Close();
             foreach (var item in liquidaCuotas)
             {
-                if (item.NumLiquidacion != paciente.NumLiquidacion)
+                if (item.Identificacion != paciente.Identificacion)
                 {
                     Guardar(item);
                 }
@@ -105,14 +107,14 @@ namespace DAL
                 }
             }
         }
-        public LiquidaCuota Buscar(string numLiquidacion)
+        public LiquidaCuota Buscar(string identificacion)
         {
             liquidaCuotas.Clear();
             liquidaCuotas = Consultar();
           
             foreach (var item in liquidaCuotas)
             {
-                if (item.NumLiquidacion.Equals(numLiquidacion))
+                if (item.Identificacion.Equals(identificacion))
                 {
                     return item;
                 }
@@ -142,7 +144,23 @@ namespace DAL
         public IList<LiquidaCuota> ListaContributivo()
         {
             return liquidaCuotas.Where(p => p.TipoAfiliacion.Equals("Contributivo")).ToList();
+        } 
+        public decimal TotalCuotaModeradoras()
+        {
+            return liquidaCuotas.Sum(p => p.CuotaModeradora);
         }
+        public decimal SumaLiquidacionSubsidiado()
+        {
+            return liquidaCuotas.Where(p => p.TipoAfiliacion == "Subsidiado").Sum(p => p.CuotaModeradora);
+        }
+        public decimal SumaLiquidacionContributivo()
+        {
+            return liquidaCuotas.Where(p => p.TipoAfiliacion == "Contributivo").Sum(p => p.CuotaModeradora);
+        }
+        
+
+
     }
+
 }
 

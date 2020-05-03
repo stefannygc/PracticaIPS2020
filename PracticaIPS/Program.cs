@@ -51,14 +51,19 @@ namespace PracticaIPS
         {
             LiquidaCuota liquidaCuota;
             Console.Clear();
-            string identificacion, numeroLiquidacion, tipoAfiliacion;
+            string nombre, identificacion, numeroLiquidacion, tipoAfiliacion;
             decimal salario, valorServicio, Tarifa;
+        
+            
 
             Console.Write("Digite identificacion: ");
             identificacion = Console.ReadLine();
 
             Console.Write("Digite Tarifa: ");
             Tarifa = decimal.Parse(Console.ReadLine());
+           
+            Console.Write("Digite Nombre: ");
+            nombre= Console.ReadLine();
 
             Console.Write("Digite numero de liquidacion: ");
             numeroLiquidacion = Console.ReadLine();
@@ -84,8 +89,9 @@ namespace PracticaIPS
                 liquidaCuota = new Contributivo();
             }
 
-
+           
             liquidaCuota.Identificacion = identificacion;
+            liquidaCuota.Nombre = nombre;
             liquidaCuota.Tarifa = Tarifa;
             liquidaCuota.NumLiquidacion = numeroLiquidacion;
             liquidaCuota.TipoAfiliacion = tipoAfiliacion;

@@ -19,7 +19,7 @@ namespace PracticaIPS_GUI
 
         private void registrarToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            RegistrarPacienteFrm registrarPacienteFrm = new RegistrarPacienteFrm();
+            RegistrarLiquidaCuotaFrm registrarPacienteFrm = new RegistrarLiquidaCuotaFrm();
             registrarPacienteFrm.Show();
         }
 
