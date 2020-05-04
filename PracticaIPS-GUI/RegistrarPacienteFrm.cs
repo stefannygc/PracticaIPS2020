@@ -146,6 +146,6 @@ namespace PracticaIPS_GUI
 
         }
 
-      
+       
     }
 }

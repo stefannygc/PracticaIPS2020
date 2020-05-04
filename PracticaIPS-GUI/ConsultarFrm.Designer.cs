@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConsultarFrm));
             this.label1 = new System.Windows.Forms.Label();
             this.TotalSubsidiadoTxt = new System.Windows.Forms.TextBox();
             this.TotalHombres = new System.Windows.Forms.Label();
@@ -36,7 +37,6 @@
             this.cmbConsultar = new System.Windows.Forms.ComboBox();
             this.TotalContributivoTxt = new System.Windows.Forms.TextBox();
             this.TotalizarMujeresTxt = new System.Windows.Forms.Label();
-            this.ConsultarBtn = new System.Windows.Forms.Button();
             this.ValorTotalLiquiTxt = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.ValorLiContributivoTxt = new System.Windows.Forms.TextBox();
@@ -44,6 +44,7 @@
             this.ValorLiquiSubsidiadioTxt = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.DtgPaciente = new System.Windows.Forms.DataGridView();
+            this.ConsultarBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DtgPaciente)).BeginInit();
             this.SuspendLayout();
             // 
@@ -124,18 +125,6 @@
             this.TotalizarMujeresTxt.TabIndex = 23;
             this.TotalizarMujeresTxt.Text = "Liquidaciones Contributivo";
             // 
-            // ConsultarBtn
-            // 
-            this.ConsultarBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.ConsultarBtn.Location = new System.Drawing.Point(379, 320);
-            this.ConsultarBtn.Name = "ConsultarBtn";
-            this.ConsultarBtn.Size = new System.Drawing.Size(86, 33);
-            this.ConsultarBtn.TabIndex = 22;
-            this.ConsultarBtn.Text = "Consultar";
-            this.ConsultarBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.ConsultarBtn.UseVisualStyleBackColor = true;
-            this.ConsultarBtn.Click += new System.EventHandler(this.ConsultarBtn_Click);
-            // 
             // ValorTotalLiquiTxt
             // 
             this.ValorTotalLiquiTxt.Location = new System.Drawing.Point(918, 337);
@@ -198,6 +187,20 @@
             this.DtgPaciente.Size = new System.Drawing.Size(1020, 219);
             this.DtgPaciente.TabIndex = 38;
             // 
+            // ConsultarBtn
+            // 
+            this.ConsultarBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ConsultarBtn.Image = global::PracticaIPS_GUI.Properties.Resources.icontexto_search_17_icon_icons_com_76913;
+            this.ConsultarBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.ConsultarBtn.Location = new System.Drawing.Point(379, 320);
+            this.ConsultarBtn.Name = "ConsultarBtn";
+            this.ConsultarBtn.Size = new System.Drawing.Size(76, 59);
+            this.ConsultarBtn.TabIndex = 22;
+            this.ConsultarBtn.Text = "Consultar";
+            this.ConsultarBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.ConsultarBtn.UseVisualStyleBackColor = true;
+            this.ConsultarBtn.Click += new System.EventHandler(this.ConsultarBtn_Click);
+            // 
             // ConsultarFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -219,6 +222,7 @@
             this.Controls.Add(this.TotalContributivoTxt);
             this.Controls.Add(this.TotalizarMujeresTxt);
             this.Controls.Add(this.ConsultarBtn);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.Name = "ConsultarFrm";
             this.Text = "Consultar";

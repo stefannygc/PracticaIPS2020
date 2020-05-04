@@ -80,6 +80,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="RegistrarPacienteFrm.resx">
       <DependentUpon>RegistrarPacienteFrm.cs</DependentUpon>
@@ -106,6 +107,24 @@
       <Project>{EAEFFA44-FC8D-4EFE-98F8-E5EFB0DAA3A8}</Project>
       <Name>Entity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\savetheapplication_guardar_2958.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xmag_search_find_export_locate_5984.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit_icon-icons.com_66118.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search_find_look_locate_icon-icons.com_59984.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\seo-social-web-network-internet_262_icon-icons.com_61518 %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icontexto-search-17_icon-icons.com_76913.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

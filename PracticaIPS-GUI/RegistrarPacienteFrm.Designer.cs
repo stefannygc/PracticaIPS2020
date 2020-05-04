@@ -28,10 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.EliminarBtn = new System.Windows.Forms.Button();
-            this.ModificarBtn = new System.Windows.Forms.Button();
-            this.BuscarBtn = new System.Windows.Forms.Button();
-            this.GuardarBtn = new System.Windows.Forms.Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RegistrarLiquidaCuotaFrm));
             this.NumLiquidacionTxt = new System.Windows.Forms.TextBox();
             this.SalarioTxt = new System.Windows.Forms.TextBox();
             this.ValorServicioTxt = new System.Windows.Forms.TextBox();
@@ -50,60 +47,12 @@
             this.label8 = new System.Windows.Forms.Label();
             this.CuotaTxt = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.BuscarBtn = new System.Windows.Forms.Button();
+            this.GuardarBtn = new System.Windows.Forms.Button();
+            this.ModificarBtn = new System.Windows.Forms.Button();
+            this.EliminarBtn = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // EliminarBtn
-            // 
-            this.EliminarBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.EliminarBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.EliminarBtn.Location = new System.Drawing.Point(422, 370);
-            this.EliminarBtn.Name = "EliminarBtn";
-            this.EliminarBtn.Size = new System.Drawing.Size(110, 38);
-            this.EliminarBtn.TabIndex = 27;
-            this.EliminarBtn.Text = "Eliminar";
-            this.EliminarBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.EliminarBtn.UseVisualStyleBackColor = true;
-            this.EliminarBtn.Click += new System.EventHandler(this.EliminarBtn_Click);
-            // 
-            // ModificarBtn
-            // 
-            this.ModificarBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ModificarBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.ModificarBtn.Location = new System.Drawing.Point(306, 370);
-            this.ModificarBtn.Name = "ModificarBtn";
-            this.ModificarBtn.Size = new System.Drawing.Size(110, 38);
-            this.ModificarBtn.TabIndex = 26;
-            this.ModificarBtn.Text = "Modificar";
-            this.ModificarBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.ModificarBtn.UseVisualStyleBackColor = true;
-            this.ModificarBtn.Click += new System.EventHandler(this.ModificarBtn_Click);
-            // 
-            // BuscarBtn
-            // 
-            this.BuscarBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BuscarBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.BuscarBtn.Location = new System.Drawing.Point(183, 370);
-            this.BuscarBtn.Name = "BuscarBtn";
-            this.BuscarBtn.Size = new System.Drawing.Size(110, 38);
-            this.BuscarBtn.TabIndex = 25;
-            this.BuscarBtn.Text = "Buscar";
-            this.BuscarBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.BuscarBtn.UseVisualStyleBackColor = true;
-            this.BuscarBtn.Click += new System.EventHandler(this.BuscarBtn_Click);
-            // 
-            // GuardarBtn
-            // 
-            this.GuardarBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.GuardarBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.GuardarBtn.Location = new System.Drawing.Point(48, 367);
-            this.GuardarBtn.Name = "GuardarBtn";
-            this.GuardarBtn.Size = new System.Drawing.Size(110, 38);
-            this.GuardarBtn.TabIndex = 24;
-            this.GuardarBtn.Text = "Guardar";
-            this.GuardarBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.GuardarBtn.UseVisualStyleBackColor = true;
-            this.GuardarBtn.Click += new System.EventHandler(this.GuardarBtn_Click);
             // 
             // NumLiquidacionTxt
             // 
@@ -280,17 +229,74 @@
             this.label6.TabIndex = 29;
             this.label6.Text = "DATOS";
             // 
+            // BuscarBtn
+            // 
+            this.BuscarBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BuscarBtn.Image = global::PracticaIPS_GUI.Properties.Resources.search_find_look_locate_icon_icons_com_59984;
+            this.BuscarBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.BuscarBtn.Location = new System.Drawing.Point(191, 332);
+            this.BuscarBtn.Name = "BuscarBtn";
+            this.BuscarBtn.Size = new System.Drawing.Size(75, 54);
+            this.BuscarBtn.TabIndex = 25;
+            this.BuscarBtn.Text = "Buscar";
+            this.BuscarBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.BuscarBtn.UseVisualStyleBackColor = true;
+            this.BuscarBtn.Click += new System.EventHandler(this.BuscarBtn_Click);
+            // 
+            // GuardarBtn
+            // 
+            this.GuardarBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.GuardarBtn.Image = global::PracticaIPS_GUI.Properties.Resources.savetheapplication_guardar_2958;
+            this.GuardarBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.GuardarBtn.Location = new System.Drawing.Point(92, 332);
+            this.GuardarBtn.Name = "GuardarBtn";
+            this.GuardarBtn.Size = new System.Drawing.Size(81, 54);
+            this.GuardarBtn.TabIndex = 24;
+            this.GuardarBtn.Text = "Guardar";
+            this.GuardarBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.GuardarBtn.UseVisualStyleBackColor = true;
+            this.GuardarBtn.Click += new System.EventHandler(this.GuardarBtn_Click);
+            // 
+            // ModificarBtn
+            // 
+            this.ModificarBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ModificarBtn.Image = global::PracticaIPS_GUI.Properties.Resources.edit_icon_icons_com_66118;
+            this.ModificarBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.ModificarBtn.Location = new System.Drawing.Point(282, 332);
+            this.ModificarBtn.Name = "ModificarBtn";
+            this.ModificarBtn.Size = new System.Drawing.Size(86, 54);
+            this.ModificarBtn.TabIndex = 26;
+            this.ModificarBtn.Text = "Modificar";
+            this.ModificarBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.ModificarBtn.UseVisualStyleBackColor = true;
+            this.ModificarBtn.Click += new System.EventHandler(this.ModificarBtn_Click);
+            // 
+            // EliminarBtn
+            // 
+            this.EliminarBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.EliminarBtn.Image = global::PracticaIPS_GUI.Properties.Resources.seo_social_web_network_internet_262_icon_icons_com_61518__1_;
+            this.EliminarBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.EliminarBtn.Location = new System.Drawing.Point(393, 332);
+            this.EliminarBtn.Name = "EliminarBtn";
+            this.EliminarBtn.Size = new System.Drawing.Size(82, 54);
+            this.EliminarBtn.TabIndex = 27;
+            this.EliminarBtn.Text = "Eliminar";
+            this.EliminarBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.EliminarBtn.UseVisualStyleBackColor = true;
+            this.EliminarBtn.Click += new System.EventHandler(this.EliminarBtn_Click);
+            // 
             // RegistrarLiquidaCuotaFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(606, 431);
+            this.ClientSize = new System.Drawing.Size(585, 426);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.BuscarBtn);
             this.Controls.Add(this.GuardarBtn);
             this.Controls.Add(this.ModificarBtn);
             this.Controls.Add(this.EliminarBtn);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "RegistrarLiquidaCuotaFrm";
             this.Text = "Registrar Liquidacion De Cuota";
             this.panel1.ResumeLayout(false);
