@@ -28,5 +28,10 @@ namespace PracticaIPS_GUI
             ConsultarFrm consultarFrm = new ConsultarFrm();
             consultarFrm.Show();
         }
+
+        private void salirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Dispose();
+        }
     }
 }

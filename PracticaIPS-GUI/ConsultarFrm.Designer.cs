@@ -52,7 +52,7 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(16, 250);
+            this.label1.Location = new System.Drawing.Point(6, 332);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(139, 18);
             this.label1.TabIndex = 30;
@@ -101,7 +101,7 @@
             "Total De Liquidaciones",
             "Liquidaciones Contributivo",
             "Liquidaciones Subsidiado"});
-            this.cmbConsultar.Location = new System.Drawing.Point(179, 250);
+            this.cmbConsultar.Location = new System.Drawing.Point(169, 332);
             this.cmbConsultar.Name = "cmbConsultar";
             this.cmbConsultar.Size = new System.Drawing.Size(184, 21);
             this.cmbConsultar.TabIndex = 25;
@@ -127,7 +127,7 @@
             // ConsultarBtn
             // 
             this.ConsultarBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.ConsultarBtn.Location = new System.Drawing.Point(389, 238);
+            this.ConsultarBtn.Location = new System.Drawing.Point(379, 320);
             this.ConsultarBtn.Name = "ConsultarBtn";
             this.ConsultarBtn.Size = new System.Drawing.Size(86, 33);
             this.ConsultarBtn.TabIndex = 22;
